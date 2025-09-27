@@ -25,6 +25,7 @@ import me.zhengjie.domain.S3Storage;
 import me.zhengjie.service.S3StorageService;
 import me.zhengjie.service.dto.S3StorageQueryCriteria;
 import me.zhengjie.utils.PageResult;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/api/s3Storage")
 @Api(tags = "工具：S3协议云存储管理")
+@ConditionalOnProperty(name = "amz.s3.enabled", havingValue = "true", matchIfMissing = false)
 public class S3StorageController {
 
     private final AmzS3Config amzS3Config;

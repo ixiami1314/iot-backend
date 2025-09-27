@@ -50,5 +50,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>, JpaSp
     @Query("SELECT COUNT(c) > 0 FROM Customer c WHERE c.customerCode = ?1 AND c.id != ?2")
     boolean existsByCustomerCodeAndIdNot(String customerCode, Long id);
 
-    Long countByCustomerId(Long id);
+    Long countById(Long id);
 }

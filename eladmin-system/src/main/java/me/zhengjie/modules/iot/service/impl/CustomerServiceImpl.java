@@ -48,7 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
             .map(customer -> {
                 CustomerDto dto = customerMapper.toDto(customer);
                 // 设置设备数量
-                dto.setDeviceCount(customerRepository.countByCustomerId(customer.getId()));
+                dto.setDeviceCount(customerRepository.countById(customer.getId()));
                 return dto;
             })
             .collect(Collectors.toList());
@@ -68,7 +68,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository.findById(id)
             .orElseThrow(() -> new BadRequestException("客户不存在"));
         CustomerDto dto = customerMapper.toDto(customer);
-        dto.setDeviceCount(customerRepository.countByCustomerId(id));
+        dto.setDeviceCount(customerRepository.countById(id));
         return dto;
     }
 
@@ -122,7 +122,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .orElseThrow(() -> new BadRequestException("客户不存在"));
             
             // 检查是否有关联设备
-            Long deviceCount = customerRepository.countByCustomerId(id);
+            Long deviceCount = customerRepository.countById(id);
             if (deviceCount > 0) {
                 throw new BadRequestException("客户下存在设备，无法删除");
             }

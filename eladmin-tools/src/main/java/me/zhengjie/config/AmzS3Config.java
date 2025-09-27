@@ -1,13 +1,10 @@
 package me.zhengjie.config;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
 
 import java.net.URI;
 
@@ -18,6 +15,7 @@ import java.net.URI;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "amz.s3")
+@ConditionalOnProperty(name = "amz.s3.enabled", havingValue = "true", matchIfMissing = false)
 public class AmzS3Config {
 
 	/**
@@ -69,10 +67,16 @@ public class AmzS3Config {
 	 * @return 配置好的 AmazonS3 客户端实例
 	 */
 	@Bean
-	public S3Client amazonS3Client() {
+	@ConditionalOnProperty(name = "amz.s3.enabled", havingValue = "true", matchIfMissing = false)
+	public Object amazonS3Client() {
+		// 由于S3功能已禁用，返回null或空对象
+		// 如果需要启用S3功能，请取消注释下面的代码并添加相应的依赖
+		/*
 		return S3Client.builder().region(Region.of(region))
 				.endpointOverride(URI.create(endPoint))
 				.credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
 				.build();
+		*/
+		return null;
 	}
 }
