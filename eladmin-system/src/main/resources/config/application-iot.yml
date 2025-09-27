@@ -1,0 +1,31 @@
+# EMQX MQTT配置
+emqx:
+  host: localhost
+  port: 1883
+  username: admin
+  password: admin123
+  client-id-prefix: iot-backend
+  connection-timeout: 30
+  keep-alive-interval: 60
+  ssl-enabled: false
+  auto-reconnect: true
+  reconnect-interval: 5
+  max-reconnect-attempts: 10
+
+# IoT设备管理配置
+iot:
+  device:
+    # 设备状态检查间隔（秒）
+    status-check-interval: 30
+    # 设备离线超时时间（秒）
+    offline-timeout: 300
+    # 数据保留天数
+    data-retention-days: 30
+  mqtt:
+    # 支持的主题模式
+    topic-patterns:
+      - "device/+/+"
+      - "sensor/+/+"
+      - "status/+/+"
+    # 消息处理线程池大小
+    thread-pool-size: 10
